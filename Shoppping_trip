@@ -1,0 +1,84 @@
+import sqlite3
+
+
+def create_database(shop_name):
+    """Creates a database file with the given shop name."""
+    conn = sqlite3.connect(f'{shop_name}.db')
+    cursor = conn.cursor()
+    cursor.execute(f'''
+        CREATE TABLE IF NOT EXISTS {shop_name} (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            item TEXT NOT NULL,
+            price REAL NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+    print(f"Database '{shop_name}.db' created!")
+
+
+def add_item_to_database(shop_name, item, price):
+    """Adds a new item and its price to the database."""
+    conn = sqlite3.connect(f'{shop_name}.db')
+    cursor = conn.cursor()
+    cursor.execute(f"INSERT INTO {shop_name} (item, price) VALUES (?, ?)", (item, price))
+    conn.commit()
+    conn.close()
+
+def get_price_from_database(shop_name, item):
+    """Retrieves the price of an item from the database."""
+    conn = sqlite3.connect(f'{shop_name}.db')
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT price FROM {shop_name} WHERE item=?", (item,))
+    result = cursor.fetchone()
+    conn.close()
+
+    if result:
+        return result[0]
+    else:
+        return None
+
+def main():
+    shop_name = input("Enter the name of the shop:")
+    create_database(shop_name)
+
+    shopping_list = []
+    prices = []
+    total_price = 0
+
+    print(f"\nShopping list for {shop_name}:")
+    while True:
+        item = input("Enter an item (or 'done' to finish): ")
+        if item.lower() == 'done':
+            break
+        shopping_list.append(item)
+        price = get_price_from_database(shop_name, item)
+        if price is not None:
+            prices.append(price)
+            total_price += price
+        else:
+            print(f"Price for '{item}' not found in the database. Please enter it manually:")
+            price = float(input(f"Enter the price of {item}: "))
+            prices.append(price)
+            total_price += price
+            add_item_to_database(shop_name, item, price)
+
+    has_discount = input("Do you have any discounts to apply to the entire list? (yes/no): ").lower()
+    if has_discount == 'yes':
+        discount_percentage = float(input("Enter the discount percentage: "))
+        discount_amount = total_price * (discount_percentage / 100)
+        total_price -= discount_amount
+
+    print("\nYour shopping list:")
+    for i in range(len(shopping_list)):
+        print(f"{i+1}. {shopping_list[i]} - £{prices[i]:.2f}")
+    if has_discount == 'yes': 
+        print(f"\nTotal price before discount: ${total_price + discount_amount:.2f}")
+        print(f"Total discount: £{discount_amount:.2f}")
+    print(f"Total price after discount: £{total_price:.2f}")
+
+    print(f"\nThank you for shopping at {shop_name}!")
+
+if __name__ == "__main__":
+    main()
