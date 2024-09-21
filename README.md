@@ -1,9 +1,11 @@
 # Python Projects Collection
 
-Overview
+## Overview
+
 This repository contains a collection of small Python projects, primarily developed for practice and to gain more experience with Python programming. The projects cover a range of tasks, including automation scripts, data handling, and utility applications. Each project demonstrates key concepts in Python, such as file handling, database interaction, algorithms, and more.
 
-Purpose
+## Purpose
+
 The purpose of this repository is to:
 
 - Showcase my growing knowledge of Python.
@@ -11,7 +13,7 @@ The purpose of this repository is to:
 - Share my coding journey with the community for feedback and learning.
 - Offer useful Python scripts that can be expanded or modified.
 
-Projects
+## Projects
 
 1. **Grocery List Manager**  
    A small application to manage grocery items, store prices, and calculate total costs. It uses SQLite to store and retrieve data and supports discount application.
@@ -30,7 +32,8 @@ Projects
      - Simple user interface for ease of use
      - Modular functions to allow for future expansion of additional calculation types
 
-How to Use
+## How to Use
+
 To run any of the projects:
 
 1. Clone the repository:
@@ -50,11 +53,14 @@ To run any of the projects:
    python main.py
    ```
 
-Future Improvements
+## Future Improvements
+
 I plan to continue adding more projects and enhancing the existing ones with new features or optimizations. Contributions and suggestions are welcome!
 
-Feedback
+## Feedback
+
 If you have any feedback or suggestions, feel free to reach out or submit an issue on GitHub. I appreciate constructive feedback to help me improve.
 
-License
+## License
+
 This project is open-source under the MIT License. See the [LICENSE](LICENSE) file for more details.
